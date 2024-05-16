@@ -24,11 +24,11 @@ This dataset is based on annual reports of the US Commissioner of Indian Affairs
 ## Tools
 The data for each year is saved in a .csv file, which I uploaded into a MySQL server. The code is written in python using VScode to access the MySQL server and then conduct the analysis. Specific libraries in python include:
 
--
--
--
--
-
+-mysql.connector
+-numpy
+-pandas
+-matplotlib.pyplot
+-tabulate
 
 
 ### Data Cleaning
@@ -39,6 +39,15 @@ The data collection required manually typing the statistics from government repo
 
 
 ### Results
+
+
+
+![image](https://github.com/lucaskolson/boarding_school_funding/assets/91341415/22ced2ca-1448-4884-b0d9-c9c27d2a6236)
+
+
+
+
+
 
 
 ### Recommendations
