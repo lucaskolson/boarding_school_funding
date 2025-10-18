@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # Replace these with your database credentials
 host = '127.0.0.1'
 user = 'lucas'
-password = 'Domino123@'
+password = 'Domino123%'
 database = 'Dissertation'
 
 # Create a MySQL connection
