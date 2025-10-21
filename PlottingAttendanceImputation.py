@@ -2,6 +2,7 @@ import mysql.connector
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
 
 # Replace these with your database credentials
 host = '127.0.0.1'
@@ -461,13 +462,13 @@ for table_df in table_names2:
 
     # Calculate the sum of 'DayAtt' where 'Country' is equal to 'US'
     sum_day_att_US = table_df.loc[table_df['Country'] == 'US', 'DayAtt'].sum()
-    sum_day_att_US_church = table_df.loc[(table_df['Country'] == 'US') & (table_df['Denomination'] != 'N/A'), 'DayAtt'].sum()
+    sum_day_att_US_church = table_df.loc[(table_df['Country'] == 'US') & (table_df['Denomination'].notna()), 'DayAtt'].sum()
     sum_boarding_att = table_df.loc[table_df['Country'] == 'US', 'Boarding'].sum()
-    sum_boarding_att_US_church = table_df.loc[(table_df['Country'] == 'US') & (table_df['Denomination'] != 'N/A'), 'Boarding'].sum()
+    sum_boarding_att_US_church = table_df.loc[(table_df['Country'] == 'US') & (table_df['Denomination'].notna()), 'Boarding'].sum()
     sum_day_att_CA = table_df.loc[table_df['Country'] == 'Canada', 'DayAtt'].sum()
-    sum_day_att_CA_church = table_df.loc[(table_df['Country'] == 'Canada') & (table_df['Denomination'] != 'N/A'), 'DayAtt'].sum()
+    sum_day_att_CA_church = table_df.loc[(table_df['Country'] == 'Canada') & (table_df['Denomination'].notna()), 'DayAtt'].sum()
     sum_boarding_att_CA = table_df.loc[table_df['Country'] == 'Canada', 'Boarding'].sum()
-    sum_boarding_att_CA_church = table_df.loc[(table_df['Country'] == 'Canada') & (table_df['Denomination'] != 'N/A'), 'Boarding'].sum()
+    sum_boarding_att_CA_church = table_df.loc[(table_df['Country'] == 'Canada') & (table_df['Denomination'].notna()), 'Boarding'].sum()
 
     # Append the sum to the list
     US_Day_Att.append(sum_day_att_US)
@@ -488,27 +489,38 @@ Canada_Day_Att_Church[-7] = None
 
 years = range(1876, 1909)
 
-# Plot the results
-plt.plot(years, US_Day_Att, marker='o', label='US Day Attendance')
-plt.plot(years, US_Day_Att_Church, marker='o', linestyle='dotted', label='US Day Attendance Church')
-plt.plot(years, Canada_Day_Att, marker='o', label="Canada Day Attendance")
-plt.plot(years, Canada_Day_Att_Church, marker='o', linestyle='dotted', label="Canada Day Attendance Church")
+# -------------------------
+# Day Attendance Plot
+# -------------------------
+plt.figure(figsize=(12, 6))
+plt.plot(years, US_Day_Att, marker='o', markersize=4, color='black', linestyle='-', label='US Day Attendance')
+plt.plot(years, US_Day_Att_Church, marker='o', markersize=4, color='black', linestyle='--', label='US Day Attendance Church')
+plt.plot(years, Canada_Day_Att, marker='o', markersize=4, color='grey', linestyle='-', label='Canada Day Attendance')
+plt.plot(years, Canada_Day_Att_Church, marker='o', markersize=4, color='grey', linestyle='--', label='Canada Day Attendance Church')
 
 plt.xlabel('Year')
-plt.ylabel('Attendance')
-plt.title('Day Attendance by country')
-plt.legend()
-plt.grid(True)
+plt.ylabel('Day Attendance')
+#plt.title('Day Attendance by Country')
+plt.gca().yaxis.set_major_formatter(mtick.StrMethodFormatter('{x:,.0f}'))  # commas in y-axis
+plt.grid(False)  # remove gridlines
+plt.legend(fontsize=12, loc='best')
+plt.tight_layout()
 plt.show()
 
-plt.plot(years, Canada_Boarding_Att, marker='o', label="Canada Boarding Attendance")
-plt.plot(years, Canada_Boarding_Att_Church, marker='o', linestyle='dotted', label="Canada Boarding Attendance")
-plt.plot(years, US_Boarding_Att, marker='o', label='US Boarding Attendance')
-plt.plot(years, US_Boarding_Att_Church, marker='o', linestyle='dotted', label='US Boarding Attendance Church')
+# -------------------------
+# Boarding Attendance Plot
+# -------------------------
+plt.figure(figsize=(12, 6))
+plt.plot(years, US_Boarding_Att, marker='o', markersize=4, color='black', linestyle='-', label='US Boarding Attendance')
+plt.plot(years, US_Boarding_Att_Church, marker='o', markersize=4, color='black', linestyle='--', label='US Boarding Attendance Church')
+plt.plot(years, Canada_Boarding_Att, marker='o', markersize=4, color='grey', linestyle='-', label='Canada Boarding Attendance')
+plt.plot(years, Canada_Boarding_Att_Church, marker='o', markersize=4, color='grey', linestyle='--', label='Canada Boarding Attendance Church')
 
 plt.xlabel('Year')
-plt.ylabel('Attendance')
-plt.title('Boarding Attendance by Country')
-plt.legend()
-plt.grid(True)
+plt.ylabel('Boarding Attendance')
+#plt.title('Boarding Attendance by Country')
+plt.gca().yaxis.set_major_formatter(mtick.StrMethodFormatter('{x:,.0f}'))  # commas in y-axis
+plt.grid(False)  # remove gridlines
+plt.legend(fontsize=12, loc='best')
+plt.tight_layout()
 plt.show()
